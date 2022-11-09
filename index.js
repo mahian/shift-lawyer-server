@@ -44,6 +44,23 @@ async function run() {
             const service = await serviceCollection.deleteOne(query);
             res.send(service)
         })
+
+        app.put('/services/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const service = req.body;
+            const option = {upsert: true};
+            const updatedService = {
+                $set: {
+                    title: service.title,
+                    imgUrl: service.imgUrl,
+                    description: service.description
+                }
+            }
+            const result = await serviceCollection.updateOne(query, updatedService, option);
+            res.send(result);
+        })
+
     }
     finally { }
 }
