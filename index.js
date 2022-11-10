@@ -79,6 +79,13 @@ async function run() {
             res.send(service)
         })
 
+        app.delete('/reviews/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const review = await reviewCollection.deleteOne(query);
+            res.send(review)
+        })
+
         // update/put data
         app.put('/services/:id', async (req, res) => {
             const id = req.params.id;
